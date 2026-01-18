@@ -1,11 +1,15 @@
 ﻿import tkinter as tk
 import tkinter.ttk as ttk
+import tkinter.messagebox as msgbox
 import tkinter.filedialog as fileask
 
 import sys
-from random import randint, choice
-from os.path import join, exists
 from threading import Thread
+from os.path import join, exists
+from os import makedirs
+
+from random import randint, choice
+
 
 class CreateFolder:
     def __init__(self, main:tk.Tk, path:str, number:str):
@@ -25,6 +29,53 @@ class CreateFolder:
         if foldercheck_result and numbercheck_result: 
             #检查是否通过两个条件，通过才执行下面的代码
             loadwin = LoadingWindow(main)
+            createfolder_thread = Thread(target=self._execute, daemon=True,
+                                         args=(path, number, loadwin))
+            createfolder_thread.start()
+
+    def _choose_letter(self, how_long:int) -> str:
+        '''
+        负责随机生成一段乱文，也是乱码文件夹生成器的一个重要零件。
+        不过开始之前，你先给我输入一个数字，决定我到底要生成多长的乱文
+        我生成好了后会给你
+        '''
+        letter = 'abcdefghijklmnopqrstuvwxyz1234567890'
+        return ''.join(choice(letter) for _ in range(how_long)) #返回已经搞定的乱文
+
+    def _set_folder_name(self) -> str:
+        '''
+        负责乱码文件夹的命名。
+        不需要向该函数提供任何名称，可以直接调用。
+        当工作完成时，返回乱码文件夹的值。
+        '''
+        template = ['%s-%s-%s-%s','%s-%s-%s',
+                    '%s-%s','%s'] #乱码文件夹名称的名称模板
+        choosed_template = choice(template) #选择一个模板
+        word_temp = [] #乱文的暂存列表
+        for i in range(choosed_template.count('%s')):
+            word_temp.append(self._choose_letter(randint(5, 10)))
+        #下方的return将会现场组合好乱码文件夹的名称，然后返回
+        return choosed_template%tuple(word_temp)
+    
+    def _execute(self, path:str, number:str, window:tk.Toplevel):
+        '''
+        这个函数负责创建文件夹。
+        至于其他的活？这是其他函数干的事情
+        '''
+        try:
+            for _ in range(int(number)): #循环，创建文件夹，循环多少次那么创建文件夹多少次
+                fullpath = join(path, self._set_folder_name()) #生成文件夹的路径
+                if not exists(fullpath): # 只有不存在才创建，防止崩溃
+                    makedirs(fullpath)
+            window.after(0, lambda: msgbox.showinfo('提示', '文件夹创建完成啦！'))
+        except Exception as e:
+            #Debug: ↓这是一个临时性的报错窗口解决方案，在不久后会更换掉
+            window.after(0, lambda: msgbox.showerror('出错了...',
+                                             '软件似乎出了点问题，请你检查下\n错误报告：'+str(e)))
+        finally:
+            #↓销毁窗口并关闭，防止内存残留
+            window.after(0, window.destroy)
+
     def _check_folder_exists(self, main:tk.Tk, path:str) -> bool:
         '''
         检查用户输入的文件夹路径是否存在。
