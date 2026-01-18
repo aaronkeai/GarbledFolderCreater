@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.5" author="PygubuDesigner 0.41.4">
+  <project>
+    <settings>
+      <setting id="name">乱码文件夹 生成器</setting>
+      <setting id="description">GUI页面的乱码文件夹生成器。</setting>
+      <setting id="module_name">module</setting>
+      <setting id="template">application</setting>
+      <setting id="main_widget">tk1</setting>
+      <setting id="main_classname">MainWindow</setting>
+      <setting id="main_menu" />
+      <setting id="output_dir">..\..\..\..\..\桌面</setting>
+      <setting id="output_dir2" />
+      <setting id="import_tkvariables">True</setting>
+      <setting id="use_ttk_styledefinition_file">False</setting>
+      <setting id="use_i18n">False</setting>
+      <setting id="all_ids_attributes">False</setting>
+      <setting id="generate_code_onsave">False</setting>
+      <setting id="use_window_centering_code">False</setting>
+      <setting id="ttk_style_definition_file" />
+    </settings>
+    <customwidgets />
+    <resources />
+  </project>
+  <object class="tk.Tk" id="tk1">
+    <property name="geometry">550x380</property>
+    <property name="height">0</property>
+    <property name="minsize">550|380</property>
+    <property name="overrideredirect">false</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">乱码文件夹 生成器</property>
+    <property name="width">0</property>
+    <child>
+      <object class="ttk.Labelframe" id="labelframe1">
+        <property name="height">160</property>
+        <property name="relief">flat</property>
+        <property name="text" translatable="yes">生成设置</property>
+        <property name="width">490</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="x">30</property>
+          <property name="y">20</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="label1">
+            <property name="font">{不存在字体} 10 {bold}</property>
+            <property name="text" translatable="yes">生成位置：</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="x">20</property>
+              <property name="y">10</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="label2">
+            <property name="font">{不存在字体} 10 {bold}</property>
+            <property name="text" translatable="yes">生成数量：</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="x">20</property>
+              <property name="y">45</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Entry" id="entry1">
+            <property name="font">{楷体} 12 {}</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="height">25</property>
+              <property name="width">340</property>
+              <property name="x">115</property>
+              <property name="y">9</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Entry" id="entry2">
+            <property name="font">{楷体} 12 {}</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="height">25</property>
+              <property name="width">310</property>
+              <property name="x">115</property>
+              <property name="y">45</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="label3">
+            <property name="font">{不存在字体} 10 {bold}</property>
+            <property name="text" translatable="yes">个</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="x">430</property>
+              <property name="y">45</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="button2">
+            <property name="background">green</property>
+            <property name="borderwidth">0</property>
+            <property name="font">{不存在字体} 10 {bold}</property>
+            <property name="foreground">white</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">让我选择存放位置！</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="height">33</property>
+              <property name="width">200</property>
+              <property name="x">25</property>
+              <property name="y">83</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="button4">
+            <property name="background">#9200d0</property>
+            <property name="borderwidth">0</property>
+            <property name="font">{不存在字体} 10 {bold}</property>
+            <property name="foreground">white</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">随机生成文件夹</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="height">33</property>
+              <property name="width">200</property>
+              <property name="x">260</property>
+              <property name="y">83</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="button1">
+        <property name="background">green</property>
+        <property name="borderwidth">0</property>
+        <property name="font">{不存在字体} 10 {bold}</property>
+        <property name="foreground">white</property>
+        <property name="height">2</property>
+        <property name="relief">flat</property>
+        <property name="text" translatable="yes">开始生成！</property>
+        <property name="width">20</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="x">175</property>
+          <property name="y">250</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="label4">
+        <property name="font">{楷体} 14 {bold}</property>
+        <property name="foreground">red</property>
+        <property name="text" translatable="yes">必须指定一个位置。</property>
+        <layout manager="place">
+          <property name="height">30</property>
+          <property name="width">510</property>
+          <property name="x">20</property>
+          <property name="y">200</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>
