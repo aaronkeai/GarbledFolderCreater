@@ -5,6 +5,7 @@ import tkinter.filedialog as fileask
 import sys
 from random import randint, choice
 from os.path import join, exists
+from threading import Thread
 
 class CreateFolder:
     def __init__(self, main:tk.Tk, path:str, number:str):
@@ -15,13 +16,15 @@ class CreateFolder:
         number：用户希望生成的文件夹。
         
         __init__说明：
-        这个函数仅负责创建这个核心操作。
+        这个函数仅负责走流程这个核心操作。
         涉及其他方面（如文件夹存在检查、数字合法检查等），将会交给其他函数处理。
         '''
         main.tiplabel.place_forget() #清空状态
         foldercheck_result = self._check_folder_exists(main, path)
         numbercheck_result = self._check_number_exists(main, number)
-
+        if foldercheck_result and numbercheck_result: 
+            #检查是否通过两个条件，通过才执行下面的代码
+            loadwin = LoadingWindow(main)
     def _check_folder_exists(self, main:tk.Tk, path:str) -> bool:
         '''
         检查用户输入的文件夹路径是否存在。
@@ -50,6 +53,37 @@ class CreateFolder:
         except ValueError: #在int过程中如果出错那么不合规
             main.tiplabel.config(text='必须输入阿拉伯整数。')
             main.tiplabel.place(x=20, y=200, width=510, height=30) 
+
+class LoadingWindow(tk.Toplevel):
+    def __init__(self, main:tk.Tk):
+        '''
+        此模块负责在创建文件夹时弹出窗口。
+        在此窗口弹出期间，用户无法在弹窗以外的窗口做任何事情，直到任务完成后消失。
+        '''
+        super().__init__()
+        self.title('创建文件夹中，请稍等...')
+        main.winfo_geometry(self, 400, 150)
+        self.attributes('-alpha', 0.8)
+        self.protocol('WM_DELETE_WINDOW', lambda: None)
+        self.resizable(0, 0) #窗口初始化设置
+
+        self._set_components()
+
+        self.transient(main)
+        self.grab_set()
+        self.focus_set() #由于该窗口的性质，故这样设置，使其变成一个弹窗。
+    
+    def _set_components(self):
+        '''
+        此函数负责在Loading窗口中创建控件。
+        '''
+        self.showtips = tk.Label(self, text='正在创建文件夹\n请稍安勿躁', 
+                                 font=('', 12, 'bold'))
+        self.showtips.place(x=100, y=25, width=200, height=50)
+        self.process = ttk.Progressbar(self, orient='horizontal', mode='indeterminate')
+        self.process.place(x=70, y=90, width=265, height=25) 
+        #进度条，指示软件正在运行中，但是不具有进度功能↑
+        self.process.start(5)
 
 class MainWindow(tk.Tk):
     #====================窗口&控件部分====================

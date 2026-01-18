@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.5" author="PygubuDesigner 0.41.4">
+  <project>
+    <settings />
+    <customwidgets />
+    <resources />
+  </project>
+  <object class="tk.Toplevel" id="toplevel1">
+    <property name="geometry">400x150</property>
+    <property name="height">200</property>
+    <property name="overrideredirect">false</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">创建文件夹中，请稍等...</property>
+    <child>
+      <object class="tk.Label" id="label3">
+        <property name="font">{不存在字体} 12 {bold}</property>
+        <property name="text" translatable="yes">正在创建文件夹
+请稍安勿躁</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="height">50</property>
+          <property name="width">200</property>
+          <property name="x">100</property>
+          <property name="y">25</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Progressbar" id="progressbar2">
+        <property name="mode">indeterminate</property>
+        <property name="orient">horizontal</property>
+        <property name="value">40</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="height">25</property>
+          <property name="width">265</property>
+          <property name="x">70</property>
+          <property name="y">90</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>
