@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>612f5966-2b7c-479e-8ade-c47aaf39492c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GUI\LICENCE.py</StartupFile>
+    <StartupFile>GUI\乱码文件夹-生成器.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,16 +22,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bash\乱码文件夹 生成器.py" />
-    <Compile Include="GUI\LICENCE.py" />
+    <Compile Include="GUI\assets\assets.py" />
+    <Compile Include="GUI\LICENSE.py" />
     <Compile Include="GUI\乱码文件夹-生成器.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\" />
     <Folder Include="Bash\" />
+    <Folder Include="GUI\assets\" />
+    <Folder Include="GUI\UI\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GUI\LoadWindow-GUI.ui" />
-    <Content Include="GUI\MainWindow-GUI.ui" />
+    <Content Include="GUI\UI\ErrorWindow-GUI.ui" />
+    <Content Include="GUI\UI\License-GUI.ui" />
+    <Content Include="GUI\UI\LoadWindow-GUI.ui" />
+    <Content Include="GUI\UI\MainWindow-GUI.ui" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

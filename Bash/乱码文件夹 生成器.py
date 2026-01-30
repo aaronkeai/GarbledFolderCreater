@@ -1,4 +1,28 @@
-﻿from os import makedirs
+﻿'''
+    乱码文件夹生成器 - Bash
+    Copyright (C) 2026 Chung Chai Aaron Dong
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    --- 特别补充说明 ---
+    1. 严禁倒卖本代码（包括其中的一部分）或将其用于商业洗稿。
+    2. 严禁 Gitee、GitCode 等平台在未经作者书面许可的情况下，私自镜像、克隆
+       或通过爬虫抓取本项目用于增加平台KPI等。
+    3. 任何违反 GPL v3 协议的行为，作者保留在开源社区公示及追究法律责任的权利。
+'''
+
+from os import makedirs
 from os.path import join, exists
 from random import randint, choice
 from time import sleep

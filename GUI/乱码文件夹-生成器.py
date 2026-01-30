@@ -1,4 +1,28 @@
-﻿import tkinter as tk
+﻿'''
+    乱码文件夹生成器 - GUI
+    Copyright (C) 2026 Chung Chai Aaron Dong
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    --- 特别补充说明 ---
+    1. 严禁倒卖本代码（包括其中的一部分）或将其用于商业洗稿。
+    2. 严禁 Gitee、GitCode 等平台在未经作者书面许可的情况下，私自镜像、克隆
+       或通过爬虫抓取本项目用于增加平台KPI等。
+    3. 任何违反 GPL v3 协议的行为，作者保留在开源社区公示及追究法律责任的权利。
+'''
+
+import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.messagebox as msgbox
 import tkinter.filedialog as fileask
@@ -9,6 +33,8 @@ from os.path import join, exists
 from os import makedirs
 
 from random import randint, choice
+
+import LICENSE
 
 #==================== 全局函数 ====================
 def winfo_geometry(master:tk.Tk, x:int, y:int):
@@ -23,16 +49,15 @@ def winfo_geometry(master:tk.Tk, x:int, y:int):
 
 def dpi_fix(master:tk.Tk):
     '''
-    解决窗口在高DPI下错位问题
+    解决窗口在高DPI下错位问题，针对Windows的狗屎代码的优化
     这个函数特别解决150DPI下错位问题（针对希沃大屏等特殊设备）
     靠，Tkinter的代码真的够老，修复DPI的函数都没有，技术债是吗？
     '''
     pixels = master.winfo_fpixels('72p') / 72.0 #计算当前DPI
-    if pixels > 1.7:  #如果DPI大于125
+    if pixels > 1.7 and sys.platform == 'win32':  #如果DPI大于125
         scaling = pixels*0.8
         #下方发放设置参数，让其全局生效
         master.call('tk', 'scaling', scaling)
-
 #==================== 类定义 ====================
 class CreateFolder:
     def __init__(self, main:tk.Tk, path:str, number:str):
@@ -304,7 +329,8 @@ class MainWindow(tk.Tk):
 
         #-----aboutmenu菜单-----
         self.aboutmenu.add_command(label='关于该软件')
-        self.aboutmenu.add_command(label='开源许可证...')
+        self.aboutmenu.add_command(label='开源许可证...', 
+                                   command=lambda: LICENSE.MainWindow(self))
         self.aboutmenu.add_separator()
         self.aboutmenu.add_command(label='支持该软件')
 
