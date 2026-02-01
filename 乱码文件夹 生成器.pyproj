@@ -4,13 +4,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>612f5966-2b7c-479e-8ade-c47aaf39492c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GUI\aboutwindow.py</StartupFile>
+    <StartupFile>GUI\乱码文件夹-生成器.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>乱码文件夹 生成器</Name>
     <RootNamespace>乱码文件夹 生成器</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,8 +25,9 @@
   <ItemGroup>
     <Compile Include="Bash\乱码文件夹 生成器.py" />
     <Compile Include="GUI\aboutwindow.py" />
-    <Compile Include="GUI\assets\assets.py" />
     <Compile Include="GUI\LICENSE.py" />
+    <Compile Include="GUI\module\LString\__init__.py" />
+    <Compile Include="GUI\supportwindow.py" />
     <Compile Include="GUI\乱码文件夹-生成器.py" />
   </ItemGroup>
   <ItemGroup>
@@ -32,10 +35,13 @@
     <Folder Include="Bash\" />
     <Folder Include="GUI\assets\" />
     <Folder Include="GUI\assets\image\" />
+    <Folder Include="GUI\module\" />
+    <Folder Include="GUI\module\LString\" />
     <Folder Include="GUI\UI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GUI\assets\image\show.png" />
+    <Content Include="GUI\assets\image\support.png" />
     <Content Include="GUI\UI\AboutWindow - GUI.ui" />
     <Content Include="GUI\UI\ErrorWindow-GUI.ui" />
     <Content Include="GUI\UI\License-GUI.ui" />

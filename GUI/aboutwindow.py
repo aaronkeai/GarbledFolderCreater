@@ -24,14 +24,19 @@
 
 import tkinter as tk
 import tkinter.messagebox as msgbox
-from PIL import Image, ImageTk
 import sys
-from os.path import join, abspath
+from os.path import join, abspath, exists #Python自带库
+
+import LICENSE
+import supportwindow #导入外部库
+
+from PIL import Image, ImageTk #第三方库
 
 #==================== 全局函数 ====================
 def resource_path(relative_path) -> str:
     '''
     针对软件打包的情况生成路径，然后返回str值，可以直接使用。
+    特别关照“VS”这个狗屎调试器，能自动检测是否在调试模式
 
     relative_path：以这个代码文件为基准，定位到文件的路径。
     '''
@@ -42,11 +47,14 @@ def resource_path(relative_path) -> str:
         base_path =abspath(".")
 
     #↓返回拼接结果
-    return join(base_path, relative_path) 
+    if exists(join(base_path, relative_path)): #确实是否在VS调试环境下
+        return join(base_path, relative_path) 
+    else:
+        return join(base_path, 'GUI', relative_path)
 
 #==================== 类定义 ====================
 class MainWindow(tk.Toplevel):
-    def __init__(self, main='Debug'):
+    def __init__(self, main:tk.Tk): #为了调试main暂时这样写（Debug）
         '''
         展示乱码文件夹生成器的关于信息界面。
 
@@ -58,11 +66,11 @@ class MainWindow(tk.Toplevel):
         self.title('乱码文件夹 生成器 - 关于该软件')
         self._winfo_geometry(600, 400)
         self.attributes('-alpha', 0.8)
-        self._dpi_fix() #初始化窗口参数
+        self.resizable(0, 0) #初始化窗口参数
 
-        #self.transient(main)
-        #self.grab_set()
-        #self.focus_set() #负责将窗口变弹窗（Debug：暂时禁用）
+        self.transient(main)
+        self.grab_set()
+        self.focus_set() #负责将窗口变弹窗（Debug：暂时禁用）
 
         #----- 菜单创建 -----
         self.menu = tk.Menu() #主菜单
@@ -75,14 +83,16 @@ class MainWindow(tk.Toplevel):
         self.menu.add_cascade(label='文件', menu=self.filemenu)
         self.menu.add_cascade(label='更多', menu=self.moremenu)
 
-        self._child_menu_create() #拼接菜单
-        self._set_components() #放置控件
+        self._child_menu_create(self) #拼接菜单
+        self._set_components(self) #放置控件
 
         self.config(menu=self.menu)
         
-    def _child_menu_create(self):
+    def _child_menu_create(self, main='Debug'):
         '''
         负责创建软件菜单，为宝贵的__init__函数节省空间。
+
+        main：设定主窗口。
         '''
         # ----- Filemenu子菜单 - 透明度调整菜单 -----
         alpha_options = [('0.2 （不建议）', 0.2), ('0.4', 0.4), ('0.6', 0.6), ('0.8 （默认）', 0.8),
@@ -98,17 +108,19 @@ class MainWindow(tk.Toplevel):
 
         # ----- Moremenu设置 -----
         self.moremenu.add_command(label='❤ 支持该软件 ❤',  background='#fc7aab', 
-                                  foreground='#f31c0a', font=('', 15, 'bold'))
+                                  foreground='#f31c0a', font=('', 15, 'bold'), command=lambda: supportwindow.MainWindow(main))
+        self.moremenu.add_command(label='开源许可证', command=lambda: LICENSE.MainWindow(self))
         self.moremenu.add_command(label='小提示...', command=lambda: msgbox.showinfo('这个夜景好美啊', '我希望我也能去那里...'))
 
-    def _set_components(self):
+    def _set_components(self, main='Debug'):
         '''
         负责窗口控件的创建。
+        main：设定主窗口。
         '''
         #----- 图片展示部分 -----
         try:
-            self.image = self._load_picture(r'assets\image\show.png') #加载图片
-            self.picture = tk.Label(self, image=self.image, bg='red')
+            self.image = self._load_picture(join('assets', 'image', 'show.png')) #加载图片
+            self.picture = tk.Label(self, image=self.image)
             self.picture.place(x=-5, y=-5, width=610, height=120) #放置图片
         except Exception as e:
             '''
@@ -132,7 +144,8 @@ class MainWindow(tk.Toplevel):
                               command=self.destroy) #确认按钮
         ok_button.place(x=55, y=280, width=220, height=50)
         support_project_button = tk.Button(self, text='❤ 支持该项目 ❤', bg='#fc7aab', fg='#f31c0a', activebackground='#FCB827',
-                              activeforeground='white', border=0, relief='flat', font=('', 15, 'bold')) #支持项目按钮
+                              activeforeground='white', border=0, relief='flat', font=('', 15, 'bold'),
+                              command=lambda: supportwindow.MainWindow(main)) #支持项目按钮
         support_project_button.place(x=326, y=280, width=220, height=50)  
 
     def _winfo_geometry(self, x:int, y:int):
@@ -145,28 +158,15 @@ class MainWindow(tk.Toplevel):
         self.geometry(f'{x}x{y}+{int(screenwidth)}+{int(screenheight)}')
         self.minsize(x, y)
 
-    def _dpi_fix(self:tk.Tk):
-        '''
-        解决窗口在高DPI下错位问题，针对Windows的狗屎代码的优化
-        这个函数特别解决150DPI下错位问题（针对希沃大屏等特殊设备）
-        靠，Tkinter的代码真的够老，修复DPI的函数都没有，技术债是吗？
-        '''
-        pixels = self.winfo_fpixels('72p') / 72.0 #计算像素位置
-        if pixels > 1.7 and sys.platform == 'win32':  #如果DPI大于125并且是Windows
-            scaling = pixels * 0.8
-            #↓在过高DPI下调整缩放
-            self.call('tk', 'scaling', scaling)
-
     def _load_picture(self, path:int) -> ImageTk.PhotoImage:
         '''
         选取指定位置的图片，然后返回能让Tk识别到的Image文本。
 
         path：图片所在路径。
         '''
-        get_image = Image.open(resource_path('GUI\\' + path)) #Debug
+        get_image = Image.open(resource_path(path))
         #↓返回tk图片数据
         return ImageTk.PhotoImage(get_image) 
-        
 
 if __name__ == '__main__':
     app = MainWindow()

@@ -31,11 +31,12 @@ import sys
 from threading import Thread
 from os.path import join, exists
 from os import makedirs
+from time import sleep
 
-from random import randint, choice
+from random import randint, choice #Python自带模块
 
 import LICENSE
-import aboutwindow
+import aboutwindow #导入外部模块
 
 #==================== 全局函数 ====================
 def winfo_geometry(master:tk.Tk, x:int, y:int):
@@ -57,6 +58,10 @@ def dpi_fix(master:tk.Tk):
     pixels = master.winfo_fpixels('72p') / 72.0 #计算当前DPI
     if pixels > 1.7 and sys.platform == 'win32':  #如果DPI大于125
         scaling = pixels*0.8
+        #下方发放设置参数，让其全局生效
+        master.call('tk', 'scaling', scaling)
+    elif pixels < 1.34 and sys.platform == 'win32': #如果DPI是100
+        scaling = pixels*1.3
         #下方发放设置参数，让其全局生效
         master.call('tk', 'scaling', scaling)
 #==================== 类定义 ====================
@@ -116,6 +121,7 @@ class CreateFolder:
                 fullpath = join(path, self._set_folder_name()) #生成文件夹的路径
                 if not exists(fullpath): # 只有不存在才创建，防止崩溃
                     makedirs(fullpath)
+                sleep(0.01) #延时防卡死
             window.after(0, lambda: msgbox.showinfo('提示', '文件夹创建完成啦！'))
         except Exception as e:
             window.after(0,lambda error=e: self._show_error(window, '''1) 你选择的文件夹所在磁盘下线或者故障。
@@ -125,7 +131,7 @@ class CreateFolder:
 5) 你选择的文件夹所在的网络驱动器由于一些原因下线了。''', error)) #抛出窗口错误
         finally:
             #↓销毁窗口并关闭，防止内存残留
-            window.after(0, window.destroy)
+            window.after(50, window.destroy)
 
     def _check_folder_exists(self, main:tk.Tk, path:str) -> bool:
         '''

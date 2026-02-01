@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.5" author="PygubuDesigner 0.41.4">
+  <project>
+    <settings />
+    <customwidgets />
+    <resources />
+  </project>
+  <object class="tk.Toplevel" id="toplevel1">
+    <property name="geometry">450x450</property>
+    <property name="height">200</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">支持该软件</property>
+    <property name="width">200</property>
+    <child>
+      <object class="tk.Label" id="label1">
+        <property name="image">support.png</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="height">470</property>
+          <property name="width">470</property>
+          <property name="x">-10</property>
+          <property name="y">-10</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>

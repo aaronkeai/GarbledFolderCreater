@@ -619,3 +619,13 @@ an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 '''
+
+# ↓开发是神圣的，任何人无权阻止我的开发
+FUCK_PARENT = '''
+我开发这个作品，一方面为了学习，另一方面是想创造属于我的作品。
+堂堂开发，竟然有卑劣之人，使用无耻的手段，试图让我放弃！
+还企图通过1.5小时对话，上演21世纪的《空城计》，利用感情！想让我的项目烂尾！
+我，在此说明：开发是神圣的，无论是谁，都不可以阻止我的开发！
+我失去编程，相当于中国失去了港澳台，这是绝对不能接受的！
+这个项目，只要我在，就会一直维护下去，直到我成就了新事业！
+'''
